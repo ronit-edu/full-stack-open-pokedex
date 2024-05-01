@@ -25,11 +25,15 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
-      - name: includes skip
+      - name: joined
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run:
           echo "commits ${{join(github.event.commits.*.message, ' ')}}"
+      - name: has skip
+        if: ${{contains('skip', join(github.event.commits.*.message, ' '))}}
+        run:
+          echo "it contains"
   simple_deployment_pipeline:
     runs-on: ubuntu-latest
     steps:
