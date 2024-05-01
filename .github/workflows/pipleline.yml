@@ -25,6 +25,11 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
+      - name: includes skip
+        env:
+          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+        run:
+          echo "commits ${{join(github.event.commits.*.message, '')}}"
   simple_deployment_pipeline:
     runs-on: ubuntu-latest
     steps:
