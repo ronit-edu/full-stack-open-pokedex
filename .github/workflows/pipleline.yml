@@ -31,7 +31,7 @@ jobs:
         run:
           echo "commits ${{join(github.event.commits.*.message, ' ')}}"
       - name: has skip
-        if: ${{contains('skip', join(github.event.commits.*.message, ' '))}}
+        if: ${{contains(join(github.event.commits.*.message, ' '), '#skip')}}
         run:
           echo "it contains"
   simple_deployment_pipeline:
