@@ -16,6 +16,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '21'
+        
+      - name: Commit author
+        run: echo "author ${{github.event.commits[0].author.name}}"
       - name: Install dependencies 
         run: npm install  
 
@@ -34,6 +37,14 @@ jobs:
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip')}}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+      # - name: Deployment success
+      #   if: ${{success() && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip')}}
+      #   with:
+      #     severity: info
+      #     description: to https://full-stack-open-pokedex-7hvm.onrender.com
+      #     text: A new version of Pokedex deployed
+      #     webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
+
       
   tag_release:
     needs: [simple_deployment_pipeline]
