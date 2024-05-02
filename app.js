@@ -8,7 +8,7 @@ app.use(express.static('dist'))
 
 app.get('/health', (req, res) => {
   res.status(404).end()
-  ////res.send('guthib.com')
+  //////res.send('guthib.com')
 })
 
 app.listen(PORT, () => {
